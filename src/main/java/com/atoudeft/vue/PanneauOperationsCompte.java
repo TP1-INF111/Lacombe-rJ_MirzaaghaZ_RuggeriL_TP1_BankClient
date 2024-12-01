@@ -17,7 +17,7 @@ public class PanneauOperationsCompte extends JPanel {
         bHistorique = new JButton("Historique du compte");
         lblSolde = new JLabel("Solde : ");
 
-        bEpargne.setActionCommand("DEPOT");
+        bEpargne.setActionCommand("DEPOT"); //action devrait surement être EPARGNE
         bDepot.setActionCommand("DEPOT");
         bRetrait.setActionCommand("RETRAIT");
         bTransfert.setActionCommand("TRANSFER");

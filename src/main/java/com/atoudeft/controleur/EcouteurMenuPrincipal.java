@@ -1,6 +1,7 @@
 package com.atoudeft.controleur;
 
 import com.atoudeft.client.Client;
+import com.atoudeft.vue.PanneauConfigServeur;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,6 +53,37 @@ public class EcouteurMenuPrincipal implements ActionListener {
                     break;
                 case "CONFIGURER":
                     //TODO : compléter (question 1.3)
+                    String adr = client.getAdrServeur();
+                    int port = client.getPortServeur();
+                    PanneauConfigServeur panneauConfigServeur = new PanneauConfigServeur(adr, port);
+                    res = JOptionPane.showConfirmDialog(fenetre, panneauConfigServeur, "Configuration Server", JOptionPane.OK_CANCEL_OPTION);
+                    //if (res == JOptionPane.OK_OPTION){
+                    //    int portServeur = 0;
+                    //    try{
+                    //        portServeur = Integer.parseInt(panneauConfigServeur.getPortServeur());
+                    //    } catch (NumberFormatException e) {
+                    //        res = JOptionPane.showConfirmDialog(fenetre, panneauConfigServeur, "Configuration Server", JOptionPane.OK_CANCEL_OPTION);
+                    //    }
+                    //    client.setPortServeur(portServeur);
+                    //    client.setAdrServeur(panneauConfigServeur.getAdresseServeur());
+                    //}
+                    if (res == JOptionPane.OK_OPTION) {
+                        boolean validInput = false;
+
+                        while (!validInput) {
+                            try {
+                                int portServeur = Integer.parseInt(panneauConfigServeur.getPortServeur());
+                                client.setPortServeur(portServeur);
+                                client.setAdrServeur(panneauConfigServeur.getAdresseServeur());
+                                validInput = true;
+                            } catch (NumberFormatException e) {
+                                res = JOptionPane.showConfirmDialog(fenetre, panneauConfigServeur, "Configuration Server", JOptionPane.OK_CANCEL_OPTION);
+                                if (res != JOptionPane.OK_OPTION) {
+                                    break;
+                                }
+                            }
+                        }
+                    }
                     break;
                 case "QUITTER":
                     if (client.isConnecte()) {
