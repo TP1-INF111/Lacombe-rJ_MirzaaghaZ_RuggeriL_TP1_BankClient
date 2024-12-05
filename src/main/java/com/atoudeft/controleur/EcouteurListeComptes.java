@@ -21,6 +21,19 @@ public class EcouteurListeComptes extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent evt) {
-        //à compléter
+        if (evt.getClickCount() == 2) {
+            JList<?> list = (JList<?>) evt.getSource();
+            int index = list.locationToIndex(evt.getPoint());
+            if (index != -1) {
+                Object item = list.getModel().getElementAt(index);
+                String compte = (String) item;
+                if (compte.contains("EPARGNE")){
+                    client.envoyer("SELECT epargne");
+                }
+                else if (compte.contains("CHEQUE")){
+                    client.envoyer("SELECT cheque");
+                }
+            }
+        }
     }
 }
