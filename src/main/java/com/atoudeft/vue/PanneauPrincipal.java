@@ -58,8 +58,41 @@ public class PanneauPrincipal  extends JPanel {
         this.add(panneauCompteClient, BorderLayout.CENTER);
         panneauCompteClient.setVisible(false);
 
-        ecouteurOperationsCompte = new EcouteurOperationsCompte(client);
+        ecouteurOperationsCompte = new EcouteurOperationsCompte(client, this);
         panneauOperationsCompte.setEcouteur(ecouteurOperationsCompte);
+    }
+
+    public void ajoutPanelOperations(String panel){
+        PanneauDepot depot = new PanneauDepot();
+        PanneauRetrait retrait = new PanneauRetrait();
+        PanneauFacture facture = new PanneauFacture();
+        PanneauTransfert transfer = new PanneauTransfert();
+        panneauCompteClient.removeAll();
+        panneauCompteClient.add(panneauOperationsCompte, BorderLayout.NORTH);
+        panneauCompteClient.add(jlNumerosComptes, BorderLayout.WEST);
+
+        switch (panel) {
+            case "DEPOT":
+                panneauCompteClient.add(depot, BorderLayout.CENTER);
+                panneauCompteClient.revalidate();
+                panneauCompteClient.repaint();
+                break;
+            case "RETRAIT":
+                panneauCompteClient.add(retrait, BorderLayout.CENTER);
+                panneauCompteClient.revalidate();
+                panneauCompteClient.repaint();
+                break;
+            case "FACTURE":
+                panneauCompteClient.add(facture, BorderLayout.CENTER);
+                panneauCompteClient.revalidate();
+                panneauCompteClient.repaint();
+                break;
+            case "TRANSFER":
+                panneauCompteClient.add(transfer, BorderLayout.CENTER);
+                panneauCompteClient.revalidate();
+                panneauCompteClient.repaint();
+                break;
+        }
     }
 
     /**
@@ -92,15 +125,4 @@ public class PanneauPrincipal  extends JPanel {
         numerosComptes.addElement(str);
     }
 
-    //TODO: À voir si utile
-
-    public boolean aCompteEpargne() {
-        for (int i = 0; i < numerosComptes.size(); i++) {
-            String compte = numerosComptes.get(i);
-            if (compte.contains("EPARGNE")) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

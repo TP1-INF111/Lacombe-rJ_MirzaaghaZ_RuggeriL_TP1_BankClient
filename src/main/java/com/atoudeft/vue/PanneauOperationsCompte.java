@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 public class PanneauOperationsCompte extends JPanel {
     private JButton bEpargne, bDepot, bRetrait, bTransfert, bFacture, bHistorique;
     private JLabel lblSolde;
+    private PanneauDepot panneauDepot;
 
     public PanneauOperationsCompte() {
         bEpargne = new JButton("Créer compte épargne");
@@ -26,14 +27,19 @@ public class PanneauOperationsCompte extends JPanel {
         bHistorique.setActionCommand("HIST");
 
         //à compléter :
-        this.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        this.add(lblSolde);
-        this.add(bEpargne);
-        this.add(bDepot);
-        this.add(bRetrait);
-        this.add(bTransfert);
-        this.add(bFacture);
-        this.add(bHistorique);
+        this.setLayout(new GridLayout(2,1));
+        JPanel navPanel = new JPanel();
+        navPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        navPanel.add(lblSolde);
+        navPanel.add(bEpargne);
+        navPanel.add(bDepot);
+        navPanel.add(bRetrait);
+        navPanel.add(bTransfert);
+        navPanel.add(bFacture);
+        navPanel.add(bHistorique);
+        navPanel.setBackground(Color.white);
+
+        this.add(navPanel);
     }
     public void setEcouteur(ActionListener ecouteur) {
         bEpargne.addActionListener(ecouteur);
