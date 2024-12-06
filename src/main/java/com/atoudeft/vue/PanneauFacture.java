@@ -2,11 +2,12 @@ package com.atoudeft.vue;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class PanneauFacture extends JPanel {
-    private JLabel titre, labelMontant, labelFacture;
+    private JLabel titre, labelMontant, labelFacture, labelDescrition;
     private JButton envoyer, annuler;
-    private JTextField montant, numFacture;
+    private JTextField montant, numFacture, descrition;
 
     public PanneauFacture() {
         titre = new JLabel("Facture");
@@ -17,6 +18,11 @@ public class PanneauFacture extends JPanel {
         annuler = new JButton("Annuler");
         labelFacture = new JLabel("Numéro de la facture : ");
         numFacture = new JTextField();
+        labelDescrition = new JLabel("Descrition : ");
+        descrition = new JTextField();
+
+        envoyer.setActionCommand("FACTURE ENVOYER");
+        annuler.setActionCommand("FACTURE ANNULER");
 
         JPanel panelFacture = new JPanel();
         panelFacture.setLayout(new GridBagLayout());
@@ -43,11 +49,35 @@ public class PanneauFacture extends JPanel {
         panelFacture.add(numFacture, c);
         c.gridx = 0;
         c.gridy = 3;
-        panelFacture.add(envoyer, c);
+        panelFacture.add(labelDescrition, c);
         c.gridx = 1;
         c.gridy = 3;
+        panelFacture.add(descrition, c);
+        c.gridx = 0;
+        c.gridy = 4;
+        panelFacture.add(envoyer, c);
+        c.gridx = 1;
+        c.gridy = 4;
         panelFacture.add(annuler, c);
         panelFacture.setBackground(Color.white);
         this.add(panelFacture);
+    }
+
+    public void setEcouteur(ActionListener ecouteur){
+        envoyer.addActionListener(ecouteur);
+        annuler.addActionListener(ecouteur);
+    }
+
+    public String getMontant(){ return montant.getText(); }
+    public String getNumFacture(){ return numFacture.getText(); }
+    public String getDescrition(){ return descrition.getText(); }
+
+    /**
+     * Supprime le texte dans les JTextfield
+     */
+    public void effaceEntree(){
+        montant.setText("");
+        numFacture.setText("");
+        descrition.setText("");
     }
 }

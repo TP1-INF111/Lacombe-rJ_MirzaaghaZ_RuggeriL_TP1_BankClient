@@ -3,12 +3,10 @@ package com.atoudeft.vue;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 
 public class PanneauOperationsCompte extends JPanel {
     private JButton bEpargne, bDepot, bRetrait, bTransfert, bFacture, bHistorique;
     private JLabel lblSolde;
-    private PanneauDepot panneauDepot;
 
     public PanneauOperationsCompte() {
         bEpargne = new JButton("Créer compte épargne");
@@ -48,5 +46,8 @@ public class PanneauOperationsCompte extends JPanel {
         bTransfert.addActionListener(ecouteur);
         bFacture.addActionListener(ecouteur);
         bHistorique.addActionListener(ecouteur);
+    }
+    public void reecritureSolde(String nouveauSolde){
+        lblSolde.setText("Solde : " + nouveauSolde);
     }
 }

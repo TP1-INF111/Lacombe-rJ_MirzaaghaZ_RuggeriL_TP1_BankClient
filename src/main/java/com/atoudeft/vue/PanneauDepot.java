@@ -2,6 +2,7 @@ package com.atoudeft.vue;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class PanneauDepot extends JPanel {
     private JLabel titre, label;
@@ -15,6 +16,9 @@ public class PanneauDepot extends JPanel {
         montant = new JTextField();
         envoyer = new JButton("Envoyer");
         annuler = new JButton("Annuler");
+
+        envoyer.setActionCommand("DEPOT ENVOYER");
+        annuler.setActionCommand("DEPOT ANNULER");
 
         JPanel panelDepot = new JPanel();
         panelDepot.setLayout(new GridBagLayout());
@@ -42,4 +46,14 @@ public class PanneauDepot extends JPanel {
         panelDepot.setBackground(Color.white);
         this.add(panelDepot);
     }
+    public void setEcouteur(ActionListener ecouteur){
+        envoyer.addActionListener(ecouteur);
+        annuler.addActionListener(ecouteur);
+    }
+    public String getMontant(){ return montant.getText(); }
+
+    /**
+     * Supprime le texte dans les JTextfield
+     */
+    public void effaceEntree(){ montant.setText(""); }
 }

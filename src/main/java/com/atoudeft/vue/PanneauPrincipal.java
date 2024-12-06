@@ -19,11 +19,18 @@ public class PanneauPrincipal  extends JPanel {
     private PanneauConnexion panneauConnexion;
     private JPanel panneauCompteClient;
     private PanneauOperationsCompte panneauOperationsCompte;
-    EcouteurOperationsCompte ecouteurOperationsCompte;
+    private EcouteurOperationsCompte ecouteurOperationsCompte;
 
     private DefaultListModel<String> numerosComptes;
     private JList<String> jlNumerosComptes;
     private JDesktopPane bureau;
+
+    private PanneauDepot panneauDepot;
+    private PanneauRetrait panneauRetrait;
+    private PanneauFacture panneauFacture;
+    private PanneauTransfert panneauTransfert;
+
+    private String nouveauSolde;
 
     public PanneauPrincipal(Client client) {
         this.client = client;
@@ -60,37 +67,93 @@ public class PanneauPrincipal  extends JPanel {
 
         ecouteurOperationsCompte = new EcouteurOperationsCompte(client, this);
         panneauOperationsCompte.setEcouteur(ecouteurOperationsCompte);
+        panneauDepot = new PanneauDepot();
+        panneauRetrait = new PanneauRetrait();
+        panneauFacture = new PanneauFacture();
+        panneauTransfert = new PanneauTransfert();
+
+        panneauDepot.setEcouteur(ecouteurOperationsCompte);
+        panneauRetrait.setEcouteur(ecouteurOperationsCompte);
+        panneauFacture.setEcouteur(ecouteurOperationsCompte);
+        panneauTransfert.setEcouteur(ecouteurOperationsCompte);
     }
 
+    /**
+     * Ajoute le panneau sélectionné et enleve tous les autres
+     * @param panel choisi sur la navbar
+     */
     public void ajoutPanelOperations(String panel){
-        PanneauDepot depot = new PanneauDepot();
-        PanneauRetrait retrait = new PanneauRetrait();
-        PanneauFacture facture = new PanneauFacture();
-        PanneauTransfert transfer = new PanneauTransfert();
         panneauCompteClient.removeAll();
         panneauCompteClient.add(panneauOperationsCompte, BorderLayout.NORTH);
         panneauCompteClient.add(jlNumerosComptes, BorderLayout.WEST);
 
         switch (panel) {
             case "DEPOT":
-                panneauCompteClient.add(depot, BorderLayout.CENTER);
+                panneauCompteClient.add(panneauDepot, BorderLayout.CENTER);
                 panneauCompteClient.revalidate();
                 panneauCompteClient.repaint();
                 break;
             case "RETRAIT":
-                panneauCompteClient.add(retrait, BorderLayout.CENTER);
+                panneauCompteClient.add(panneauRetrait, BorderLayout.CENTER);
                 panneauCompteClient.revalidate();
                 panneauCompteClient.repaint();
                 break;
             case "FACTURE":
-                panneauCompteClient.add(facture, BorderLayout.CENTER);
+                panneauCompteClient.add(panneauFacture, BorderLayout.CENTER);
                 panneauCompteClient.revalidate();
                 panneauCompteClient.repaint();
                 break;
             case "TRANSFER":
-                panneauCompteClient.add(transfer, BorderLayout.CENTER);
+                panneauCompteClient.add(panneauTransfert, BorderLayout.CENTER);
                 panneauCompteClient.revalidate();
                 panneauCompteClient.repaint();
+                break;
+        }
+    }
+
+    /**
+     * Cherche les informations entrées du client selon l'opération sélectionné
+     * @param commande est le bouton envoyer de l'opération sélectionnée
+     * @return La String des informations à envoyer au serveur
+     */
+    public String getEntree(String commande){
+        switch (commande) {
+            case "DEPOT ENVOYER":
+                String depotMontant = panneauDepot.getMontant();
+                panneauDepot.effaceEntree();
+                return depotMontant;
+            case "RETRAIT ENVOYER":
+                String retraitMontant = panneauRetrait.getMontant();
+                panneauRetrait.effaceEntree();
+                return retraitMontant;
+            case "FACTURE ENVOYER":
+                String factMontant = panneauFacture.getMontant();
+                String factNum = panneauFacture.getNumFacture();
+                String factDescription = panneauFacture.getDescrition();
+                panneauFacture.effaceEntree();
+                return factMontant + " " + factNum + " " + factDescription;
+            case "TRANSFER ENVOYER":
+                String transferMontant = panneauTransfert.getMontant();
+                String transferNum = panneauTransfert.getNumCompte();
+                panneauTransfert.effaceEntree();
+                return transferMontant + " " + transferNum;
+        }
+        return "";
+    }
+
+    public void effacerEntree(String commande) {
+        switch (commande){
+            case "DEPOT ANNULER":
+                panneauDepot.effaceEntree();
+                break;
+            case "RETRAIT ANNULER":
+                panneauRetrait.effaceEntree();
+                break;
+            case "FACTURE ANNULER":
+                panneauFacture.effaceEntree();
+                break;
+            case "TRANSFER ANNULER":
+                panneauTransfert.effaceEntree();
                 break;
         }
     }
@@ -124,5 +187,12 @@ public class PanneauPrincipal  extends JPanel {
     public void ajouterCompte(String str) {
         numerosComptes.addElement(str);
     }
+
+    public void setSolde(String nouveauSolde){
+        this.nouveauSolde = nouveauSolde;
+        panneauOperationsCompte.reecritureSolde(nouveauSolde);
+    }
+
+    public String getSolde(){ return nouveauSolde; }
 
 }

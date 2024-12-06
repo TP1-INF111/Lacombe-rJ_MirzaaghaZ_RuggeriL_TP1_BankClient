@@ -3,6 +3,7 @@ package com.atoudeft.vue;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class PanneauTransfert extends JPanel {
     private JLabel titre, labelMontant, labelCompte;
@@ -18,6 +19,9 @@ public class PanneauTransfert extends JPanel {
         annuler = new JButton("Annuler");
         labelCompte = new JLabel("Numéro du compte : ");
         numCompte = new JTextField();
+
+        envoyer.setActionCommand("TRANSFER ENVOYER");
+        annuler.setActionCommand("TRANSFER ANNULER");
 
         JPanel panelTransfert = new JPanel();
         panelTransfert.setLayout(new GridBagLayout());
@@ -50,5 +54,21 @@ public class PanneauTransfert extends JPanel {
         panelTransfert.add(annuler, c);
         panelTransfert.setBackground(Color.white);
         this.add(panelTransfert);
+    }
+
+    public void setEcouteur(ActionListener ecouteur){
+        envoyer.addActionListener(ecouteur);
+        annuler.addActionListener(ecouteur);
+    }
+
+    public String getMontant(){ return montant.getText(); }
+    public String getNumCompte(){ return numCompte.getText(); }
+
+    /**
+     * Supprime le texte dans les JTextfield
+     */
+    public void effaceEntree(){
+        montant.setText("");
+        numCompte.setText("");
     }
 }

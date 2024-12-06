@@ -97,18 +97,34 @@ public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
                 case "DEPOT" :
                     arg = evenement.getArgument();
                     JOptionPane.showMessageDialog(panneauPrincipal,"DEPOT "+arg);
+                    if (arg.contains("OK ")){
+                        String solde = arg.replace("OK ", "");
+                        panneauPrincipal.setSolde(solde);
+                    }
                     break;
                 case "RETRAIT" :
                     arg = evenement.getArgument();
                     JOptionPane.showMessageDialog(panneauPrincipal,"RETRAIT "+arg);
+                    if (arg.contains("OK ")){
+                        String solde = arg.replace("OK ", "");
+                        panneauPrincipal.setSolde(solde);
+                    }
                     break;
                 case "FACTURE" :
                     arg = evenement.getArgument();
                     JOptionPane.showMessageDialog(panneauPrincipal,"FACTURE" + arg);
+                    if (arg.contains("OK ")){
+                        String solde = arg.replace("OK ", "");
+                        panneauPrincipal.setSolde(solde);
+                    }
                     break;
                 case "TRANSFER" :
                     arg = evenement.getArgument();
                     JOptionPane.showMessageDialog(panneauPrincipal,"TRANSFER " + arg);
+                    if (arg.contains("OK ")){
+                        String solde = arg.replace("OK ", "");
+                        panneauPrincipal.setSolde(solde);
+                    }
                     break;
                 /******************* TRAITEMENT PAR DÉFAUT *******************/
                 default:
