@@ -75,7 +75,7 @@ public class MainFrame extends JFrame implements Runnable, Observateur {
         mDemarrer.addSeparator();
         mDemarrer.add(miQuitter);
 
-        miDeconnecter.setEnabled(false);
+        //miDeconnecter.setEnabled(false);
 
         JMenuBar mb = new JMenuBar();
         mb.add(mDemarrer);
@@ -98,6 +98,11 @@ public class MainFrame extends JFrame implements Runnable, Observateur {
                 this.panneauPrincipal.setVisible(false);
                 panneauPrincipal.cacherPanneauCompteClient();
                 panneauPrincipal.montrerPanneauConnexion();
+                miDeconnecter.setEnabled(false);
+                miConnecter.setEnabled(true);
+            } else {
+                miDeconnecter.setEnabled(true);
+                miConnecter.setEnabled(false);
             }
         }
     }
