@@ -3,6 +3,7 @@ package com.atoudeft.client;
 import com.atoudeft.commun.evenement.Evenement;
 import com.atoudeft.commun.evenement.GestionnaireEvenement;
 import com.atoudeft.commun.net.Connexion;
+import com.atoudeft.vue.PanneauHistorique;
 import com.atoudeft.vue.PanneauPrincipal;
 import com.programmes.MainFrame;
 
@@ -11,6 +12,7 @@ import javax.swing.*;
 public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
     private Client client;
     private PanneauPrincipal panneauPrincipal;
+    private PanneauHistorique panneauHistorique;
 
     /**
      * Construit un gestionnaire d'événements pour un client.
@@ -18,10 +20,10 @@ public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
      * @param client Client Le client pour lequel ce gestionnaire gère des événements
      */
     public GestionnaireEvenementClient2(Client client, PanneauPrincipal panneauPrincipal) {
-
         this.client = client;
         this.panneauPrincipal = panneauPrincipal;
         this.client.setGestionnaireEvenement(this);
+        this.panneauHistorique = new PanneauHistorique();
     }
     @Override
     public void traiter(Evenement evenement) {
@@ -41,12 +43,11 @@ public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
                     client.deconnecter(); //On ferme la connexion
                     break;
                 /******************* CREATION et CONNEXION *******************/
-//                case "HIST": //Le serveur a renvoyé
-//                    panneauPrincipal.setVisible(true);
-//                    JOptionPane.showMessageDialog(null,"Panneau visible");
-//                    cnx.envoyer("LIST");
-//                    arg = evenement.getArgument();
-//                    break;
+                case "HIST":
+                    arg = evenement.getArgument();
+                    panneauHistorique.setListeHistorique(arg);
+                    JOptionPane.showMessageDialog(panneauPrincipal, panneauHistorique.getPanel(), "Historique", JOptionPane.INFORMATION_MESSAGE);
+                    break;
                 case "OK":
                     panneauPrincipal.setVisible(true);
                     fenetre = (MainFrame)panneauPrincipal.getTopLevelAncestor();
@@ -91,6 +92,8 @@ public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
                 case "SELECT" :
                     arg = evenement.getArgument();
                     JOptionPane.showMessageDialog(panneauPrincipal,"SELECT "+arg);
+                    String[] argSplite = arg.split(" ");
+                    panneauPrincipal.setSolde(argSplite[argSplite.length-1]);
                     break;
 
                 /******************* OPÉRATIONS BANCAIRES *******************/
