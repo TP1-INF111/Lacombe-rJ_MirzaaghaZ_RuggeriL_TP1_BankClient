@@ -3,13 +3,10 @@ package com.atoudeft.vue;
 import com.atoudeft.client.Client;
 import com.atoudeft.controleur.EcouteurConnexion;
 import com.atoudeft.controleur.EcouteurListeComptes;
+import com.atoudeft.controleur.EcouteurOperationsCompte;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Vector;
 
 /**
  *
@@ -22,11 +19,11 @@ public class PanneauPrincipal  extends JPanel {
     private PanneauConnexion panneauConnexion;
     private JPanel panneauCompteClient;
     private PanneauOperationsCompte panneauOperationsCompte;
+    EcouteurOperationsCompte ecouteurOperationsCompte;
 
     private DefaultListModel<String> numerosComptes;
     private JList<String> jlNumerosComptes;
     private JDesktopPane bureau;
-
 
     public PanneauPrincipal(Client client) {
         this.client = client;
@@ -60,6 +57,9 @@ public class PanneauPrincipal  extends JPanel {
         this.add(panneauConnexion, BorderLayout.NORTH);
         this.add(panneauCompteClient, BorderLayout.CENTER);
         panneauCompteClient.setVisible(false);
+
+        ecouteurOperationsCompte = new EcouteurOperationsCompte(client, this);
+        panneauOperationsCompte.setEcouteur(ecouteurOperationsCompte);
     }
 
     /**
@@ -90,5 +90,15 @@ public class PanneauPrincipal  extends JPanel {
      */
     public void ajouterCompte(String str) {
         numerosComptes.addElement(str);
+    }
+
+    public boolean aCompteEpargne() {
+        for (int i = 0; i < numerosComptes.size(); i++) {
+            String compte = numerosComptes.get(i);
+            if (compte.contains("EPARGNE")) {
+                return true;
+            }
+        }
+        return false;
     }
 }
