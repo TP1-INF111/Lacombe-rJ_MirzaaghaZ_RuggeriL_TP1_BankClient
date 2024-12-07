@@ -187,12 +187,12 @@ public class PanneauPrincipal  extends JPanel {
     public void ajouterCompte(String str) {
         numerosComptes.addElement(str);
     }
-
+    /**
+     * Change le solde pour le nouveau solde et modifie le texte du solde dans PanneauOperationsCompte
+     * @param nouveauSolde du compte
+     */
     public void setSolde(String nouveauSolde){
         this.nouveauSolde = nouveauSolde;
         panneauOperationsCompte.reecritureSolde(nouveauSolde);
     }
-
-    public String getSolde(){ return nouveauSolde; }
-
 }
