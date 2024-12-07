@@ -82,15 +82,11 @@ public class GestionnaireEvenementClient2 implements GestionnaireEvenement {
                 /******************* SÉLECTION DE COMPTES *******************/
                 case "EPARGNE" :
                     arg = evenement.getArgument();
-                    System.out.println("Bienvenue dans le case EPARGNE");
-                    if (arg.trim().startsWith("NO")) {
-                        JOptionPane.showMessageDialog(panneauPrincipal, "Vous possédez déjà un compte épargne");
-                        System.out.println("NO");
-                    } else {
+                    if (arg.trim().startsWith("YES")) {
                         panneauPrincipal.ajouterCompte(arg);
-                        System.out.println("YES");
+                    } else {
+                        JOptionPane.showMessageDialog(panneauPrincipal, "Vous possédez déjà un compte épargne");
                     }
-                    JOptionPane.showMessageDialog(panneauPrincipal,"EPARGNE "+arg);
                     break;
                 case "SELECT" :
                     arg = evenement.getArgument();

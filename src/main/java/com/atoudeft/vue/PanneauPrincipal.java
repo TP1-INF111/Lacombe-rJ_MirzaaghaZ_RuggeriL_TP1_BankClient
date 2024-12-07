@@ -58,7 +58,7 @@ public class PanneauPrincipal  extends JPanel {
         this.add(panneauCompteClient, BorderLayout.CENTER);
         panneauCompteClient.setVisible(false);
 
-        ecouteurOperationsCompte = new EcouteurOperationsCompte(client, this);
+        ecouteurOperationsCompte = new EcouteurOperationsCompte(client);
         panneauOperationsCompte.setEcouteur(ecouteurOperationsCompte);
     }
 
@@ -91,6 +91,8 @@ public class PanneauPrincipal  extends JPanel {
     public void ajouterCompte(String str) {
         numerosComptes.addElement(str);
     }
+
+    //TODO: À voir si utile
 
     public boolean aCompteEpargne() {
         for (int i = 0; i < numerosComptes.size(); i++) {

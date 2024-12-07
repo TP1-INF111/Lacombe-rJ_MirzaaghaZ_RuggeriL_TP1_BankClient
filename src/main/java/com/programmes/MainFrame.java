@@ -75,7 +75,7 @@ public class MainFrame extends JFrame implements Runnable, Observateur {
         mDemarrer.addSeparator();
         mDemarrer.add(miQuitter);
 
-        //miDeconnecter.setEnabled(false);
+        miDeconnecter.setEnabled(false);
 
         JMenuBar mb = new JMenuBar();
         mb.add(mDemarrer);
